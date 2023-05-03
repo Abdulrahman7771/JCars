@@ -1,19 +1,25 @@
 package Game;
 
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Area;
+
+import javax.swing.Timer;
 
 public class CarHandler implements KeyListener{
 	CarGameGUI GUI;
-	int CarSpeed = 20;
+	Timer t;
+	int CarSpeed = 15;
+	boolean LPressed;
+	boolean RPressed;
 	public CarHandler(CarGameGUI g) {
+		t = new Timer(25, UpdateClockAction);
 		this.GUI = g;
 	}
-	@Override
-	public void keyTyped(KeyEvent k) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	@Override
 	public void keyPressed(KeyEvent k) {
 		// TODO Auto-generated method stub
@@ -21,23 +27,51 @@ public class CarHandler implements KeyListener{
 		int XPos = GUI.CarPanel.getLocation().x;
 		int YPos = GUI.CarPanel.getLocation().y;
 		if(code == 65) {
-			if(!GUI.lost) {
-			if(XPos-CarSpeed>200) {
-				GUI.CarPanel.setLocation((XPos-CarSpeed), YPos);
-			}
-			}
+			LPressed=true;
+			//if(!GUI.lost) {
+			//if(XPos-CarSpeed>200) {
+				//GUI.CarPanel.setLocation((XPos-CarSpeed), YPos);
+			//}
+			//}
 		}
 		else if(code == 68) {
-			if(!GUI.lost) {
-			if(XPos+CarSpeed<GUI.width-320) {
-				GUI.CarPanel.setLocation((XPos+CarSpeed), YPos);
-			}
-			}
+			RPressed=true;
+			//if(!GUI.lost) {
+			//if(XPos+CarSpeed<GUI.width-320) {
+				//GUI.CarPanel.setLocation((XPos+CarSpeed), YPos);
+			//}
+			//}
 		}
 	}
 	@Override
 	public void keyReleased(KeyEvent k) {
 		// TODO Auto-generated method stub
 		
+		
+			LPressed=false;
+		
+		
+			RPressed=false;
+	
+	
 	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	ActionListener UpdateClockAction = new ActionListener() {
+		  public void actionPerformed(ActionEvent e) {
+			  if(!GUI.lost) {
+				  if(LPressed) {
+					  System.out.println("YouPressedMe");
+					  GUI.CarPanel.setLocation(GUI.CarPanel.getLocation().x-CarSpeed, GUI.CarPanel.getLocation().y);
+				  }
+				  else if(RPressed) {
+					  GUI.CarPanel.setLocation(GUI.CarPanel.getLocation().x+CarSpeed, GUI.CarPanel.getLocation().y);
+				  }
+			  }
+		  }
+		};
 }

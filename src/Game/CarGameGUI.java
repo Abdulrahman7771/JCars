@@ -53,6 +53,7 @@ public class CarGameGUI {
 	 */
 	public CarGameGUI() {
 		h = new CarHandler(this);
+		h.t.start();
 		initialize();
 	}
 
