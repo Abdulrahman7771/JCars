@@ -65,12 +65,15 @@ public class CarHandler implements KeyListener{
 		  public void actionPerformed(ActionEvent e) {
 			  if(!GUI.lost) {
 				  if(LPressed) {
-					  System.out.println("YouPressedMe");
+					  if(GUI.CarPanel.getLocation().x-CarSpeed>200) {
 					  GUI.CarPanel.setLocation(GUI.CarPanel.getLocation().x-CarSpeed, GUI.CarPanel.getLocation().y);
-				  }
+					  }
+				}
 				  else if(RPressed) {
+					  if(GUI.CarPanel.getLocation().x+CarSpeed<GUI.width-320) {
 					  GUI.CarPanel.setLocation(GUI.CarPanel.getLocation().x+CarSpeed, GUI.CarPanel.getLocation().y);
-				  }
+					  }
+					  }
 			  }
 		  }
 		};
