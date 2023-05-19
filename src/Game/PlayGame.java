@@ -2,7 +2,7 @@ package Game;
 
 import java.awt.EventQueue;
 
-public class Player {
+public class PlayGame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

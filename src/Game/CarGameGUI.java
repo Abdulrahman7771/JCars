@@ -67,18 +67,22 @@ public class CarGameGUI {
 		t.start();
 		e.start();
 		frame = new JFrame("Car Game");
-		frame.getContentPane().setLayout(null);
+		//frame.getContentPane().setLayout(null);
 		layers = new JLayeredPane();
 		Background = new JPanel();
-		CarPanel = new JPanel(new BorderLayout());
+		//CarPanel = new JPanel(new BorderLayout());
+		CarPanel = new JPanel();
 		CarPanel.setSize((int)width/15, (int)(height/3.6));
 		CarPanel.setOpaque(false);
 		CarPanel.setLocation((int)(width/2.5),(int)(height/1.6));
 		
 		Background.setSize((int)width, (int)(height));
 		Background.setLocation(0,0);
-		JLabel car = new JLabel(new ImageIcon("C:/Users/anaal/eclipse-workspace/CarGame/src/Game/RedCar2.png"));
-		JLabel Back = new JLabel(new ImageIcon("C:/Users/anaal/eclipse-workspace/CarGame/src/Game/Road_Top_View (2).gif"));
+		Background.setOpaque(false);
+		//JLabel car = new JLabel(new ImageIcon("C:/Users/anaal/eclipse-workspace/CarGame/src/Game/RedCar2.png"));
+		JLabel car = new JLabel(new ImageIcon("src/Game/RedCar2.png"));
+//		JLabel Back = new JLabel(new ImageIcon("C:/Users/anaal/eclipse-workspace/CarGame/src/Game/Road_Top_View (2).gif"));
+		JLabel Back = new JLabel(new ImageIcon("src/Game/Road_Top_View (2).gif"));
 		Score = new JLabel();
 		Score.setFont(new Font("Arial", Font.BOLD, 20));
 		Score.setSize(100, 100);
@@ -95,7 +99,7 @@ public class CarGameGUI {
 		//frame.getContentPane().add(Background);
 		//frame.getContentPane().add(CarPanel);
 		frame.setContentPane(layers);
-		frame.getContentPane().setBackground(new Color(0, 255, 64));
+	//	frame.getContentPane().setBackground(new Color(0, 255, 64));
 		
 		
 		//panel.setBounds(706, 380, 10, 10);
@@ -118,7 +122,7 @@ public class CarGameGUI {
 	      }
 	    });
 		panel.add(btnFinish);
-		frame.setLocationRelativeTo(null);
+		//frame.setLocationRelativeTo(null);
 		frame.addKeyListener(h);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -133,7 +137,7 @@ public class CarGameGUI {
 		ActionListener UpdateClockEnemyAction = new ActionListener() {
 			  public void actionPerformed(ActionEvent e) {
 				  	if(!lost) {
-					JLabel enemy = new JLabel(new ImageIcon("C:/Users/anaal/eclipse-workspace/CarGame/src/Game/SilverCar2.png"));
+					JLabel enemy = new JLabel(new ImageIcon("src/Game/SilverCar2.png"));
 				    EnemyPanel = new JPanel();
 					EnemyPanel.setSize((int)width/15, (int)(height/4));
 					EnemyPanel.setOpaque(false);
@@ -151,7 +155,7 @@ public class CarGameGUI {
 							layers.remove(i);
 							layers.revalidate();
 							layers.repaint();
-							System.out.println("Removing Enemy");
+							//System.out.println("Removing Enemy");
 						}
 					}
 			    }
@@ -166,7 +170,7 @@ public class CarGameGUI {
 							Area areac = new Area(CarPanel.getBounds());
 
 							if(areae.intersects(areac.getBounds2D())) {
-								System.out.println("You Lost Loser");
+								//System.out.println("You Lost Loser");
 								lost = true;
 								HighestScore = counter;
 								lblS.setText("<html>Your Score: "+(HighestScore-1)+"<br/>Better luck next time.</html>");
