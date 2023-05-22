@@ -16,7 +16,7 @@ public class CarHandler implements KeyListener{
 	boolean LPressed;
 	boolean RPressed;
 	public CarHandler(CarGameGUI g) {
-		t = new Timer(25, UpdateClockAction);
+		t = new Timer(25, UpdateCarAction);
 		this.GUI = g;
 	}
 	
@@ -61,7 +61,7 @@ public class CarHandler implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-	ActionListener UpdateClockAction = new ActionListener() {
+	ActionListener UpdateCarAction = new ActionListener() {
 		  public void actionPerformed(ActionEvent e) {
 			  if(!GUI.lost) {
 				  if(LPressed) {

@@ -30,7 +30,7 @@ public class CarGameGUI {
 	JPanel CarPanel;
 	JPanel EnemyPanel;
 	JPanel Background;
-	JPanel panel;
+	JPanel LostPanel;
 	JLayeredPane layers;
 	JLabel Score;
 	JLabel lblS;
@@ -61,9 +61,9 @@ public class CarGameGUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		t = new Timer(1000, UpdateClockAction);
-		e = new Timer(1000, UpdateClockEnemyAction);
-		m = new Timer(25, UpdateClockEnemyMoveAction);
+		t = new Timer(1000, UpdateScoreAction);
+		e = new Timer(1000, UpdateEnemyAction);
+		m = new Timer(25, UpdateEnemyMoveAction);
 		t.start();
 		e.start();
 		frame = new JFrame("Car Game");
@@ -71,10 +71,10 @@ public class CarGameGUI {
 		layers = new JLayeredPane();
 		Background = new JPanel();
 		//CarPanel = new JPanel(new BorderLayout());
-		CarPanel = new JPanel();
-		CarPanel.setSize((int)width/15, (int)(height/3.6));
+		CarPanel = new JPanel(new BorderLayout());
+		CarPanel.setSize((int)width/15, (int)(height/3.8));
 		CarPanel.setOpaque(false);
-		CarPanel.setLocation((int)(width/2.5),(int)(height/1.6));
+		CarPanel.setLocation((int)(width/2)-((CarPanel.getSize().width)/2),(int)(height/1.6));
 		
 		Background.setSize((int)width, (int)(height));
 		Background.setLocation(0,0);
@@ -89,7 +89,8 @@ public class CarGameGUI {
 		Score.setOpaque(false);
 		Score.setLocation(40,0);
 		Background.add(Back);
-		CarPanel.add(car);
+		CarPanel.add(car, BorderLayout.CENTER);
+
 		layers.add(Background,new Integer(0));
 		layers.add(CarPanel,new Integer(1));
 		layers.add(Score,new Integer(2));
@@ -99,19 +100,20 @@ public class CarGameGUI {
 		//frame.getContentPane().add(Background);
 		//frame.getContentPane().add(CarPanel);
 		frame.setContentPane(layers);
+		
 	//	frame.getContentPane().setBackground(new Color(0, 255, 64));
 		
 		
 		//panel.setBounds(706, 380, 10, 10);
-		panel = new JPanel();
-		panel.setSize(220,100);
-		panel.setLocation((int)(width/2.5),(int)(height/2.7));
-		panel.setVisible(false);
-		layers.add(panel,new Integer(3));
+		LostPanel = new JPanel();
+		LostPanel.setSize(220,100);
+		LostPanel.setLocation((int)(width/2)-(LostPanel.getSize().width/2),(int)(height/2)-(LostPanel.getSize().height));
+		LostPanel.setVisible(false);
+		layers.add(LostPanel,new Integer(3));
 		
 		lblS = new JLabel("<html>Your Score: "+HighestScore+"<br/>Better luck next time.</html>");
 		lblS.setFont(new Font("Arial", Font.BOLD, 20));
-		panel.add(lblS);
+		LostPanel.add(lblS);
 		
 		JButton btnFinish = new JButton("Finish");
 		btnFinish.addActionListener(new ActionListener()
@@ -121,30 +123,31 @@ public class CarGameGUI {
 	        System.exit(0);
 	      }
 	    });
-		panel.add(btnFinish);
+		LostPanel.add(btnFinish);
 		//frame.setLocationRelativeTo(null);
 		frame.addKeyListener(h);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	ActionListener UpdateClockAction = new ActionListener() {
+	ActionListener UpdateScoreAction = new ActionListener() {
 		  public void actionPerformed(ActionEvent e) {
 		      if(!lost) {
 		    	  Score.setText("Score: "+Integer.toString(counter++)); 
-		    	  System.out.println(counter);}
+		    	  //System.out.println(counter);
+		    	  }
 		    }
 		};
-		ActionListener UpdateClockEnemyAction = new ActionListener() {
+		ActionListener UpdateEnemyAction = new ActionListener() {
 			  public void actionPerformed(ActionEvent e) {
 				  	if(!lost) {
 					JLabel enemy = new JLabel(new ImageIcon("src/Game/SilverCar2.png"));
-				    EnemyPanel = new JPanel();
+				    EnemyPanel = new JPanel(new BorderLayout());
 					EnemyPanel.setSize((int)width/15, (int)(height/4));
 					EnemyPanel.setOpaque(false);
 					//EnemyPanel.setLocation((int)(width/2.5),(int)(height/40));
-					EnemyPanel.setLocation(ThreadLocalRandom.current().nextInt((int)width/8, (int)(width-width/5 + 1)),(int)(height/40));
+					EnemyPanel.setLocation(ThreadLocalRandom.current().nextInt((int)width/8, (int)(width-width/5 + 1)),(int)(height/50));
 					
-					EnemyPanel.add(enemy);
+					EnemyPanel.add(enemy, BorderLayout.CENTER);
 					layers.add(EnemyPanel,new Integer(1));
 					
 					Components.add(EnemyPanel);
@@ -161,7 +164,7 @@ public class CarGameGUI {
 			    }
 				  	}
 			};
-			ActionListener UpdateClockEnemyMoveAction = new ActionListener() {
+			ActionListener UpdateEnemyMoveAction = new ActionListener() {
 				  public void actionPerformed(ActionEvent e) {
 					  for(Component i : Components) {
 						  if(!lost) {
@@ -174,7 +177,7 @@ public class CarGameGUI {
 								lost = true;
 								HighestScore = counter;
 								lblS.setText("<html>Your Score: "+(HighestScore-1)+"<br/>Better luck next time.</html>");
-								panel.setVisible(lost);
+								LostPanel.setVisible(lost);
 							}
 					  }
 				    }
